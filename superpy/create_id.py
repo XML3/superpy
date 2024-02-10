@@ -14,6 +14,7 @@ def generate_purchase_id():
 def generate_sold_id():
     return str(uuid.uuid4())
 
+#Test for sold_id/  Is it duplicating or is it Unique ID?
 def test_generate_sold_id(num_ids=1000):
     generate_ids = set()
     for _ in range(num_ids):
