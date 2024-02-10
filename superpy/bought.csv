@@ -1,0 +1,3 @@
+purchase_id,product,price,quantity,expiration_date,purchase_date
+a251e173-3415-490d-bef4-b9d42545e157,Orange,1.45,4,2024-03-01 00:00:00,2024-02-09
+1d97a64f-548b-44c1-8f85-98af04f6729e,Orange,1.45,4,2024-03-01 00:00:00,2024-02-10
