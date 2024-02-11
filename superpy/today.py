@@ -10,7 +10,7 @@ def set_current_date(new_date):
     global current_date
     current_date = new_date
     
-    #advances the global variable by specified nnumber of days.
+    #advances the global variable by specified number of days.
 def advance_current_date(days):
     global current_date
     current_date += timedelta(days=days)
