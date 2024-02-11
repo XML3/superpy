@@ -6,6 +6,7 @@ from valid_date_fnc import valid_date
 from bought import add_purchase
 from transactions import *
 from sold import prep_sold_data
+from inventory import *
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -38,7 +39,13 @@ def main():
     transaction_parser = subparsers.add_parser('transaction', help="Transaction records from buy and sell transactions")
     #add arguments here
     
-    
+#Create inventory parser
+    inventory_parser = subparsers.add_parser('inventory', help='Select to view inventory')
+    inventory_parser.add_argument('product', type=str, help='Product"s name')
+    inventory_parser.add_argument('price', type=float, help='Total price')
+    inventory_parser.add_argument('quantity_bought', type=int, help='Bought quantity of item')
+    inventory_parser.add_argument('quantity_sold', type=int, help='Sold quantity of item')
+    inventory_parser.add_argument('in_stock', type=int, help='Stock amount of product')
 #Parse Arguments
 
     args = parser.parse_args()
@@ -52,6 +59,12 @@ def main():
     if args.command == 'sell':
         prep_sold_data(args.bought_id, args.product, args.sell_price, args.quantity, args.sell_date)
         print("Successful Sale")
+
+    #transaction
+    
+    #inventory
+    add_inventory(args.product, args.price, args.quantity_bought, args.quantity_sold, args.in_stock)
+    print("Succesful operation!")
 
 if __name__ == "__main__":
     main()
