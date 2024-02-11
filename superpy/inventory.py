@@ -58,4 +58,4 @@ def print_inventory_data():
             print(row)
             
 if __name__ == "__main__":
-    
+    add_inventory('Apple', 1.30, 5, 2, 3)
