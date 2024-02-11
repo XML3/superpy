@@ -43,7 +43,6 @@ def add_purchase(product, price, quantity, expiration_date, purchase_date):
         with open('bought.csv', 'a', newline="") as csvfile:
             fieldnames = ['id', 'product', 'price', 'quantity', 'expiration_date', 'purchase_date']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            # writer.writeheader()
             writer.writerow(purchase_data)
         
     except Exception as e:
