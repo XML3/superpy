@@ -7,6 +7,7 @@ from bought import add_purchase
 from transactions import *
 from sold import *
 from inventory import *
+from update_inventory import *
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -47,8 +48,15 @@ def main():
     inventory_parser.add_argument('quantity_sold', type=int, help='Sold quantity of item')
     inventory_parser.add_argument('in_stock', type=int, help='Stock amount of product')
     inventory_parser.add_argument('--date', help='Date to fileter inventory (YYYY-MM-DD)')
-#Parse Arguments
-
+    
+#Create inventory_update parser
+    update_inventory_parser = subparsers.add_parser('update_inventory', help='Update inventory')
+    update_inventory_parser.add_argument('product', type=str, help='Product"s name')
+    update_inventory_parser.add_argument('quantity_bought', type=int, help='Bought quantity of product')
+    update_inventory_parser.add_argument('quantity_sold', type=int, help='Sold quantity of product')
+    update_inventory_parser.add_argument('in_stock', type=int, help='Total Stock quantity of product')
+    update_inventory_parser.add_argument('--date', help='Date to update inventory (YYY-MM-DD)')
+    
     args = parser.parse_args()
     
     #buy
@@ -77,5 +85,10 @@ def main():
         print("all inventory items: ")
         print_inventory_data()
 
+#inventory_update
+    if args.command == 'update_inventory':
+        calculate_stock()
+    
+    
 if __name__ == "__main__":
     main()
