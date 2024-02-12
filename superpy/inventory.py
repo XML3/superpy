@@ -2,7 +2,6 @@ import csv
 from today import *
 from create_id import*
 
-#User will also be able to search inventory by date 
 
 #Load inventory data to be used across different function calls
 def load_inventory():
@@ -13,7 +12,7 @@ def load_inventory():
             inventory.append(row)
     return inventory
 
-
+#User will also be able to search inventory by date 
 def current_inventory():
     current_date = get_current_date()
     print_inventory_data()
