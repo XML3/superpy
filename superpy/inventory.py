@@ -15,7 +15,7 @@ def load_inventory():
 #User will also be able to search inventory by date 
 def current_inventory():
     current_date = get_current_date()
-    print_inventory_data()
+    print_inventory_data(current_date)
     
     #display inventory
 def inventory_header():
@@ -104,6 +104,11 @@ def print_inventory_data(date=None):
         for row in reader:
             if date is None or row['update_date'] == date:
                 print(row)
-            
+    
+#function to advance the current date by specified number of days        
+def advance_time(days):
+    advance_current_date(days)
+    print('OK')
+
 if __name__ == "__main__":
-    add_inventory('Apple', 1.30, 5, 2, 3)
+    add_inventory('Apple', 1.33, '4', 2, 3, 10, '2024-10-13', 1.5, 'not_expired')
