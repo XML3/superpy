@@ -93,6 +93,11 @@ def main():
     if args.command == 'update_inventory':
         calculate_stock()
     
+#advance_time
+    if args.advance_time:
+        advance_current_date(args.advance_time)
+        print('Ok')
+        return
     
 if __name__ == "__main__":
     main()
