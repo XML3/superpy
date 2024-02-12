@@ -5,7 +5,7 @@ from datetime import date
 from valid_date_fnc import valid_date
 from bought import add_purchase
 from transactions import *
-from sold import prep_sold_data
+from sold import *
 from inventory import *
 
 # Do not change these lines.
@@ -57,14 +57,16 @@ def main():
 
     #sell
     if args.command == 'sell':
-        prep_sold_data(args.bought_id, args.product, args.sell_price, args.quantity, args.sell_date)
-        print("Successful Sale")
+      sold_data = prep_sold_data(args.bought_id, args.product, args.sell_price, args.quantity, args.sell_date)
+      write_to_csv(sold_data)
+      print("Successful Sale")
 
     #transaction
     
     #inventory
-    add_inventory(args.product, args.price, args.quantity_bought, args.quantity_sold, args.in_stock)
-    print("Succesful operation!")
+    if args.command == 'inventory':
+        add_inventory(args.product, args.price, args.quantity_bought, args.quantity_sold, args.in_stock)
+        print("Succesful operation!")
 
 if __name__ == "__main__":
     main()
