@@ -46,6 +46,7 @@ def main():
     inventory_parser.add_argument('quantity_bought', type=int, help='Bought quantity of item')
     inventory_parser.add_argument('quantity_sold', type=int, help='Sold quantity of item')
     inventory_parser.add_argument('in_stock', type=int, help='Stock amount of product')
+    inventory_parser.add_argument('--date', help='Date to fileter inventory (YYYY-MM-DD)')
 #Parse Arguments
 
     args = parser.parse_args()
@@ -67,6 +68,14 @@ def main():
     if args.command == 'inventory':
         add_inventory(args.product, args.price, args.quantity_bought, args.quantity_sold, args.in_stock)
         print("Succesful operation!")
+    
+    #Search inventory by date
+    elif args.date:
+        print("Inventory for date: ", args.date)
+        print_inventory_data(args.date)
+    else:
+        print("all inventory items: ")
+        print_inventory_data()
 
 if __name__ == "__main__":
     main()
