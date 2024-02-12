@@ -44,9 +44,13 @@ def main():
     inventory_parser = subparsers.add_parser('inventory', help='Select to view inventory')
     inventory_parser.add_argument('product', type=str, help='Product"s name')
     inventory_parser.add_argument('price', type=float, help='Total price')
+    inventory_parser.add_argument('purchase_price', type=str, help="Purchasing price of item")
     inventory_parser.add_argument('quantity_bought', type=int, help='Bought quantity of item')
     inventory_parser.add_argument('quantity_sold', type=int, help='Sold quantity of item')
     inventory_parser.add_argument('in_stock', type=int, help='Stock amount of product')
+    inventory_parser.add_argument('expiry_date', type=valid_date, help=' Product"s expiration date')
+    inventory_parser.add_argument('sale_price', type=float, help='Product"s sale price')
+    inventory_parser.add_argument('expiry_status', type=str, help='Expiration date status')
     inventory_parser.add_argument('--date', help='Date to fileter inventory (YYYY-MM-DD)')
     
 #Create inventory_update parser
@@ -74,7 +78,7 @@ def main():
     
     #inventory
     if args.command == 'inventory':
-        add_inventory(args.product, args.price, args.quantity_bought, args.quantity_sold, args.in_stock)
+        add_inventory(args.product, args.price, args.purchase_price, args.quantity_bought, args.quantity_sold, args.in_stock, args.expiry_date, args.sale_price, args.expiry_status)
         print("Succesful operation!")
     
     #Search inventory by date
