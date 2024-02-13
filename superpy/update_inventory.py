@@ -2,8 +2,22 @@ import csv
 from today import *
 from bought import *
 from sold import *
+from inventory import load_inventory
 
 #functions to manage inventory updates, from bought to sold and what is in_stock
+def update_existing_product(product_id, new_data):
+    inventory = load_inventory()
+    for product in inventory:
+        if product['product_id'] == product_id:
+            product.update(new_data)
+#write updated inventory to file
+    with open('inventory.csv', 'w', newline="") as csvfile:
+        fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_data', 'sale_price', 'expiry_status', 'update_date']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(inventory)
+        
+
 
 #read bought data and append it to a list and return the list
 def read_bought_data():
