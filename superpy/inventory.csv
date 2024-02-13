@@ -2,4 +2,3 @@ product_id,product,price,purchase_price,quantity_bought,quantity_sold,in_stock,e
 0d4a702c-ccee-4e91-abb2-62bd82a4f7c5,Apple,1.33,4,2,3,10,2024-10-13,1.5,not_expired,2024-02-13
 
 
-,Apple,1.33,4,2,3,10,2024-10-13,1.5,not_expired,2024-02-13
