@@ -1,7 +1,7 @@
 import csv 
 from today import *
 from create_id import*
-
+from update_inventory import *
 
 #Load inventory data to be used across different function calls
 def load_inventory():
@@ -34,10 +34,12 @@ def inventory_header():
             writer.writeheader()
             
 #Prep Data for CSV 
-def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, update_date):
+def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, update_date, product_id=None,):
     try:
         #generate unique ID for each product
-        product_id = generate_product_id()
+        # if product_id is None:
+        #     product_id = generate_product_id()
+            
         update_date = get_current_date()
         
         inventory_data = {
@@ -51,9 +53,21 @@ def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold
             'expiry_date': expiry_date,
             'sale_price': sale_price,
             'expiry_status': expiry_status,
-            #User can search invetory by date
             'update_date': update_date
         }
+        
+        #Load inventory - check if product by id already exists (when searched by ID)
+        inventory = load_inventory()
+        existing_product = get_product_by_id(product_id)
+        
+        if existing_product:
+            print("Product ID already exists. Updating existing product...")
+            update_existing_product(product_id, inventory_data)
+        else:
+                #generate unique ID for each product
+            if product_id is None:
+                product_id = generate_product_id()
+        
         #write header if needed
         inventory_header()
         
@@ -94,6 +108,14 @@ def get_expiry_status(product, inventory):
             return row['expiry_status']
     return None
 
+#Get product by ID
+def get_product_by_id(product_id):
+    inventory = load_inventory()
+    for product in inventory:
+        if product['product_id'] == product_id:
+            return product
+    return None
+
 #Read and Print content of inventory file
 def print_inventory_data(date=None):
     with open('inventory.csv', 'r') as csvfile:
@@ -111,4 +133,5 @@ def advance_time(days):
     print('OK')
 
 if __name__ == "__main__":
-    add_inventory('Apple', 1.33, '4', 2, 3, 10, '2024-10-13', 1.5, 'not_expired')
+   
+    add_inventory(product='Apple', price=1.33, purchase_price='4', quantity_bought=2, quantity_sold=3, in_stock=10, expiry_date='2024-10-13', sale_price=1.5, expiry_status='not_expired', update_date='2024-03-03')
