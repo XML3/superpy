@@ -89,27 +89,25 @@ def main():
     
     #inventory
     if args.command == 'inventory':
-        add_inventory(args.product, args.price, args.purchase_price, args.quantity_bought, args.quantity_sold, args.in_stock, args.expiry_date, args.sale_price, args.expiry_status)
-        print("Succesful operation!")
-    
-    #Search inventory by date
-    elif args.date:
-        print("Inventory for date: ", args.date)
-        print_inventory_data(args.date)
-
+        if args.date:
+            print("Inventory for date: ", args.date)
+            print_inventory_data(args.date)
+        else:
+            add_inventory(args.product, args.price, args.purchase_price, args.quantity_bought, args.quantity_sold, args.in_stock, args.expiry_date, args.sale_price, args.expiry_status)
+            print("Succesful operation!")
+        
 #Print all inventory items  
-    else:
-        print("all inventory items: ")
-        print_inventory_data()
-#inventory_ID call by product ID
-    
+    # else:
+    #     print("all inventory items: ")
+    #     print_inventory_data()
 
+    
 #inventory_update
     if args.command == 'update_inventory':
         calculate_stock()
     
 #advance_time
-    if args.advance_time:
+    if hasattr(args, 'advance_time') and args.advance_time:
         advance_current_date(args.advance_time)
         print('Ok')
         return
