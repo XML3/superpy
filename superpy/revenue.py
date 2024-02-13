@@ -34,7 +34,7 @@ def get_revenue_sold_items(date):
     sold_items_revenue = 0
         
         #read/loop through the csv file/check for today's date, if today = multiply the sell price with quantity
-    with open('open_items.csv', 'r', newline='') as csvfile:
+    with open('sold.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             if row['sell_date'] == date_str:
@@ -57,7 +57,7 @@ def get_cost_bought_items(date):
 
 def get_revenue_sold_for_month(year, month):
     sold_items_revenue = 0
-    with open('bought.csv', 'r', newline='') as csvfile:
+    with open('sold.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader: 
             sell_date = row['sell_date']
