@@ -2,7 +2,7 @@ import csv
 from today import *
 from bought import *
 from sold import *
-from inventory import load_inventory
+from inventory_utils import *
 
 #functions to manage inventory updates, from bought to sold and what is in_stock
 
