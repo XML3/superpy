@@ -8,6 +8,7 @@ from transactions import *
 from sold import *
 from inventory import *
 from update_inventory import *
+from revenue import *
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -64,6 +65,12 @@ def main():
     update_inventory_parser.add_argument('in_stock', type=int, help='Total Stock quantity of product')
     update_inventory_parser.add_argument('--date', help='Date to update inventory (YYY-MM-DD)')
     
+#Create revenue parser
+    revenue_parser = subparsers.add_parser('revenue', help='Ger revenue information')
+    revenue_parser.add_argument('input', choices=['today', 'yesterday', '--date'], help='Specify type of request')
+    revenue_parser.add_argument('date', nargs='?', type=str, help='Filter Date or month-year"s revenue (YYYY-MM or YYYY-MM-DD)')
+
+
     args = parser.parse_args()
     
     #buy
@@ -96,11 +103,11 @@ def main():
             add_inventory(args.product, args.price, args.purchase_price, args.quantity_bought, args.quantity_sold, args.in_stock, args.expiry_date, args.sale_price, args.expiry_status)
             print("Succesful operation!")
         
-#Print all inventory items  
-    # else:
-    #     print("all inventory items: ")
-    #     print_inventory_data()
-
+    #revenue
+    if args.command == 'revenue':
+        revenue, cost = revenue_requests(args.input, args.date)
+        print('Revenue:'. revenue)
+        print("Cost:", cost)
     
 #inventory_update
     if args.command == 'update_inventory':
