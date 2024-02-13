@@ -66,6 +66,7 @@ def get_revenue_sold_for_month(year, month):
                 sold_items_revenue += revenue
     return sold_items_revenue
 
+#Get revenue for specific month and year logic
 def get_cost_bought_for_month(year, month):
     bought_items_cost = 0
     with open('bought.csv', 'r', newline='') as csvfile:
