@@ -5,6 +5,8 @@ from sold import *
 from inventory import load_inventory
 
 #functions to manage inventory updates, from bought to sold and what is in_stock
+
+#update existing product by product_id and upload new data
 def update_existing_product(product_id, new_data):
     inventory = load_inventory()
     for product in inventory:
