@@ -1,16 +1,8 @@
 import csv 
 from today import *
 from create_id import*
-from update_inventory import *
+from inventory_utils import *
 
-#Load inventory data to be used across different function calls
-def load_inventory():
-    inventory = []
-    with open('inventory.csv', 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader: 
-            inventory.append(row)
-    return inventory
 
 #User will also be able to search inventory by date 
 def current_inventory():
