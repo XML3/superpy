@@ -52,7 +52,10 @@ def main():
     inventory_parser.add_argument('sale_price', type=float, help='Product"s sale price')
     inventory_parser.add_argument('expiry_status', type=str, help='Expiration date status')
     inventory_parser.add_argument('--date', help='Date to fileter inventory (YYYY-MM-DD)')
-    
+#Create inventory_ID parser to retrieve product by ID
+    inventory_id_parser = subparsers.add_parser('inventory_id', help='Retrieve a product by ID')
+    inventory_id_parser.add_argument('product_id', type=str, help='Product ID')
+
 #Create inventory_update parser
     update_inventory_parser = subparsers.add_parser('update_inventory', help='Update inventory')
     update_inventory_parser.add_argument('product', type=str, help='Product"s name')
@@ -76,6 +79,14 @@ def main():
 
     #transaction
     
+    #inventory_ID
+    if args.command == 'inventory_id':
+        product_id = args.product_id
+        product = get_product_by_id(product_id)
+        if product:
+            print("Product found:")
+            print(product)
+    
     #inventory
     if args.command == 'inventory':
         add_inventory(args.product, args.price, args.purchase_price, args.quantity_bought, args.quantity_sold, args.in_stock, args.expiry_date, args.sale_price, args.expiry_status)
@@ -85,9 +96,13 @@ def main():
     elif args.date:
         print("Inventory for date: ", args.date)
         print_inventory_data(args.date)
+
+#Print all inventory items  
     else:
         print("all inventory items: ")
         print_inventory_data()
+#inventory_ID call by product ID
+    
 
 #inventory_update
     if args.command == 'update_inventory':
