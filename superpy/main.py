@@ -73,9 +73,11 @@ def main():
     revenue_parser = subparsers.add_parser('revenue', help='Ger revenue information')
     revenue_parser.add_argument('input', nargs='?', choices=['today', 'yesterday'], default='today', help='Specify type of request (default: today)')
     revenue_parser.add_argument('--date', type=str, help='Filter Date or month-year"s revenue (YYYY-MM or YYYY-MM-DD)')
-
+    revenue_parser.add_argument('--start_date', type=str, help='Start date for period (YYYY-MM-DD)')
+    revenue_parser.add_argument('--end_date',  type=str, help='End date for period (YYYY-MM-DD)')
 
     args = parser.parse_args()
+    print(args)
     
     #buy
     if args.command == 'buy':
@@ -109,12 +111,17 @@ def main():
         
     #revenue
     if args.command == 'revenue':
-        if args.date:
+        if args.start_date and args.end_date:
+                revenue = get_revenue_specify_period(args.start_date, args.end_date)
+                print('Revenue for the specified period: ', revenue)
+        elif args.date:
             revenue, cost = revenue_requests('--date', args.date)
+            print('Revenue:', revenue)
+            print("Cost:", cost)
         else: 
             revenue, cost = revenue_requests(args.input)
-        print('Revenue:', revenue)
-        print("Cost:", cost)
+            print('Revenue: ', revenue)
+            print("Cost:", cost)
     
 #inventory_update
     if args.command == 'update_inventory':
