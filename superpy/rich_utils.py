@@ -1,7 +1,7 @@
 from rich.console import Console
 
 class RichUtils:
-    def __inti__(self):
+    def __init__(self):
         self.console = Console()
         
     def print_styled_text(self, text, style=""):
