@@ -20,13 +20,6 @@ err_console = Console(stderr=True, style="red bold")
 
 # Your code below this line.
 def main():
-    rich = RichUtils()
-    
-    rich.print_styled_text("Command Line Application", style="bold yello")
-    
-    header = "[blue]ID[/blue] | [blue]Name[/blue]"
-    rows = ["1   |  John'", "2    |  Alice"]
-    rich.print_styled_table(header, rows)
     
     parser = argparse.ArgumentParser(description="Welcome to the Super Inventory App!")
     subparsers = parser.add_subparsers(dest='command')
@@ -79,7 +72,7 @@ def main():
 #Create revenue parser
     revenue_parser = subparsers.add_parser('revenue', help='Ger revenue information')
     revenue_parser.add_argument('input', nargs='?', choices=['today', 'yesterday'], default='today', help='Specify type of request (default: today)')
-    revenue_parser.add_argument('date', type=str, help='Filter Date or month-year"s revenue (YYYY-MM or YYYY-MM-DD)')
+    revenue_parser.add_argument('--date', type=str, help='Filter Date or month-year"s revenue (YYYY-MM or YYYY-MM-DD)')
 
 
     args = parser.parse_args()
