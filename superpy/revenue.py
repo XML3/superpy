@@ -1,6 +1,7 @@
 import csv
 from today import *
 from rich_utils import RichUtils
+from datetime import datetime
 
 #style tables
 rich = RichUtils()
@@ -90,4 +91,19 @@ def get_cost_bought_for_month(year, month):
                 cost = float(row['price']) * int(row['quantity'])
                 bought_items_cost += cost
     return bought_items_cost
+    
+#Get revunue for a specific period of time
+def get_revenue_specify_period(start_date, end_date):
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    total_revenue = 0
+    
+    with open('sold.csv', 'r', newline="") as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            sell_date = datetime.strptime(row['sell_date'], '%Y-%m-%d')
+            if start_date <= sell_date <= end_date:
+                revenue = float(row['sell_price']) * int(row['quantity'])
+                total_revenue += revenue
+    return total_revenue
     
