@@ -67,8 +67,8 @@ def main():
     
 #Create revenue parser
     revenue_parser = subparsers.add_parser('revenue', help='Ger revenue information')
-    revenue_parser.add_argument('input', choices=['today', 'yesterday', '--date'], help='Specify type of request')
-    revenue_parser.add_argument('date', nargs='?', type=str, help='Filter Date or month-year"s revenue (YYYY-MM or YYYY-MM-DD)')
+    revenue_parser.add_argument('input', nargs='?', choices=['today', 'yesterday'], default='today', help='Specify type of request (default: today)')
+    revenue_parser.add_argument('date', type=str, help='Filter Date or month-year"s revenue (YYYY-MM or YYYY-MM-DD)')
 
 
     args = parser.parse_args()
@@ -105,8 +105,11 @@ def main():
         
     #revenue
     if args.command == 'revenue':
-        revenue, cost = revenue_requests(args.input, args.date)
-        print('Revenue:'. revenue)
+        if args.date:
+            revenue, cost = revenue_requests('--date', args.date)
+        else: 
+            revenue, cost = revenue_requests(args.input)
+        print('Revenue:', revenue)
         print("Cost:", cost)
     
 #inventory_update
