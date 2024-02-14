@@ -9,6 +9,7 @@ from sold import *
 from inventory import *
 from update_inventory import *
 from revenue import *
+from rich_utils import RichUtils
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -17,6 +18,14 @@ __human_name__ = "superpy"
 
 # Your code below this line.
 def main():
+    rich = RichUtils()
+    
+    rich.print_styled_text("Command Line Application", style="bold yello")
+    
+    header = "[blue]ID[/blue] | [blue]Name[/blue]"
+    rows = ["1   |  John'", "2    |  Alice"]
+    rich.print_styled_table(header, rows)
+    
     parser = argparse.ArgumentParser(description="Welcome to the Super Inventory App!")
     subparsers = parser.add_subparsers(dest='command')
     subparsers.required = True
