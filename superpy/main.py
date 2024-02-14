@@ -15,6 +15,8 @@ from rich_utils import RichUtils
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
 __human_name__ = "superpy"
 
+#Console instance for error = Red
+err_console = Console(stderr=True, style="red bold")
 
 # Your code below this line.
 def main():

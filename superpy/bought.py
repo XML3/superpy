@@ -2,6 +2,7 @@ import csv
 import argparse
 from create_id import *
 from datetime import datetime
+from rich.console import Console
 
 
 #header 
