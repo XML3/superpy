@@ -1,5 +1,15 @@
 import csv
 from today import *
+from rich_utils import RichUtils
+
+#style tables
+rich = RichUtils()
+
+rich.print_styled_text("Revenue Table", style='bold yellow')
+
+header = '[blue]Revenue Today[/blue]  |  [blue]Cost Today[/blue]  |  [blue]Revenue from Month and Year[/blue]  | [blue]Cost from Month and Year[/blue]  |  [blue]Yesterda"s Revenue[/blue]  |  [blue]Yesterda"s Cost[/blue]' 
+rich.print_styled_text(header) 
+
 
 def revenue_requests(input, date=None):
     if input == 'today':
@@ -61,7 +71,9 @@ def get_revenue_sold_for_month(year, month):
         reader = csv.DictReader(csvfile)
         for row in reader: 
             sell_date = row['sell_date']
-            if sell_date.startswith('f{year}-{month:02}'):  
+            sell_date_year, sell_date_month, _ = sell_date.split('-')
+            if int(sell_date_year) == year and int(sell_date_month) == month:
+            
                 revenue = float(row['sell_price']) * int(row['quantity'])
                 sold_items_revenue += revenue
     return sold_items_revenue
@@ -73,15 +85,9 @@ def get_cost_bought_for_month(year, month):
         reader = csv.DictReader(csvfile)
         for row in reader: 
             purchase_date = row['purchase_date']
-            if purchase_date.startswith('f{year}-{month:02}'):  
-                cost = float(row['purchase_price']) * int(row['quantity'])
-                bought_items_cost += revenue
+            purchase_date_year, purchase_date_month, _ = purchase_date.split('-')
+            if int(purchase_date_year) == year and int(purchase_date_month) == month: 
+                cost = float(row['price']) * int(row['quantity'])
+                bought_items_cost += cost
     return bought_items_cost
     
-revenue, cost = revenue_requests('today')
-print("Revenue today:", revenue)
-print('Cost today:', cost)
-
-revenue, cost = revenue_requests('--date', '2019-12')
-print("Revenue from December 2019:", revenue)
-print('Cost from December 2019:', cost)
