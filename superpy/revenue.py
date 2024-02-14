@@ -21,7 +21,7 @@ def revenue_requests(input, date=None):
         year = int(year_month[0])
         month = int(year_month[1])
         revenue_sold = get_revenue_sold_for_month(year, month)
-        cost_bought - get_cost_bought_for_month(year, month)
+        cost_bought = get_cost_bought_for_month(year, month)
         return revenue_sold, cost_bought
     else:
         raise ValueError("Invalid input")
