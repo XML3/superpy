@@ -2,6 +2,7 @@ import csv
 from today import *
 from create_id import*
 from inventory_utils import *
+from update_inventory import *
 
 
 #User will also be able to search inventory by date 
@@ -21,21 +22,22 @@ def inventory_header():
     #write header if new or empty
     if is_new_file:
         with open('inventory.csv', 'w', newline='') as csvfile:
-            fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'update_date']
+            fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             
 #Prep Data for CSV 
-def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, update_date, product_id=None,):
+def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, created_date, product_id=None,):
     try:
         #generate unique ID for each product
         # if product_id is None:
         #     product_id = generate_product_id()
             
-        update_date = get_current_date()
+        created_date = get_current_date()
+
         
         inventory_data = {
-            'product_id': product_id,
+            'product_id': product_id if product_id else generate_product_id(),
             'product': product,
             'price': price,
             'purchase_price': purchase_price,
@@ -45,30 +47,28 @@ def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold
             'expiry_date': expiry_date,
             'sale_price': sale_price,
             'expiry_status': expiry_status,
-            'update_date': update_date
+            'created_date': created_date
         }
         
         #Load inventory - check if product by id already exists (when searched by ID)
         inventory = load_inventory()
-        existing_product = get_product_by_id(product_id)
+        existing_product = get_product_by_id(inventory_data['product_id'])
         
         if existing_product:
             print("Product ID already exists. Updating existing product...")
-            update_existing_product(product_id, inventory_data)
+            update_existing_product(inventory_data['product_id'], inventory_data)
         else:
-                #generate unique ID for each product
-            if product_id is None:
-                product_id = generate_product_id()
+            print('Adding new product to inventory...')
+            #Append new inventory to the file
+            with open('inventory.csv', 'a', newline='') as csvfile:
+                fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                writer.writerow(inventory_data)
         
         #write header if needed
         inventory_header()
         
-        #append new inventory to the file
-        with open('inventory.csv', 'a', newline='') as csvfile:
-            fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'update_date']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writerow(inventory_data)
-            
+
     except Exception as e:
         print(f"An error occurred while adding items to inventory: {e}")
         
@@ -116,7 +116,7 @@ def print_inventory_data(date=None):
         print(header)
         
         for row in reader:
-            if date is None or row['update_date'] == date:
+            if date is None or row['create_date'] == date:
                 print(row)
     
 #function to advance the current date by specified number of days        
@@ -126,4 +126,5 @@ def advance_time(days):
 
 if __name__ == "__main__":
    
-    add_inventory(product='Apple', price=1.33, purchase_price='4', quantity_bought=2, quantity_sold=3, in_stock=10, expiry_date='2024-10-13', sale_price=1.5, expiry_status='not_expired', update_date='2024-03-03')
+
+    add_inventory(product='Apple', price=1.33, purchase_price='4', quantity_bought=2, quantity_sold=3, in_stock=10, expiry_date='2024-10-13', sale_price=1.5, expiry_status='not_expired', created_date='2024-03-03')
