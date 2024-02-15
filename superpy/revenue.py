@@ -4,12 +4,7 @@ from rich_utils import RichUtils
 from datetime import datetime
 
 #style tables
-rich = RichUtils()
 
-rich.print_styled_text("Revenue Table", style='bold yellow')
-
-header = '[blue]Revenue Today[/blue]  |  [blue]Cost Today[/blue]  |  [blue]Revenue from Month and Year[/blue]  | [blue]Cost from Month and Year[/blue]  |  [blue]Yesterda"s Revenue[/blue]  |  [blue]Yesterday"s Cost[/blue]' 
-rich.print_styled_text(header) 
 
 
 def revenue_requests(input, date=None):
