@@ -9,6 +9,7 @@ from sold import *
 from inventory import *
 from update_inventory import *
 from revenue import *
+from expire_dates import *
 from rich_utils import RichUtils
 
 # Do not change these lines.
@@ -75,12 +76,21 @@ def main():
     update_inventory_parser.add_argument('--date', help='Date to update inventory (YYY-MM-DD)')
     
 #Create revenue parser
-    revenue_parser = subparsers.add_parser('revenue', help='Ger revenue information')
+    revenue_parser = subparsers.add_parser('revenue', help='Get revenue information')
     revenue_parser.add_argument('input', nargs='?', choices=['today', 'yesterday'], default='today', help='Specify type of request (default: today)')
     revenue_parser.add_argument('--date', type=str, help='Filter Date or month-year"s revenue (YYYY-MM or YYYY-MM-DD)')
     revenue_parser.add_argument('--start_date', type=str, help='Start date for period (YYYY-MM-DD)')
     revenue_parser.add_argument('--end_date',  type=str, help='End date for period (YYYY-MM-DD)')
-
+    
+#Create expired_product
+    expire_dates_parser = subparsers.add_parser('expire_dates', help='Expired products, were they sold?')
+    expire_dates_parser.add_argument('product_id', type=str, help='Product ID')
+    expire_dates_parser.add_argument('product', type=str, help='Product"s name')
+    expire_dates_parser.add_argument('expiry_date', help='Product"s expiration date')
+    expire_dates_parser.add_argument('expired_sold', type=str, help='Indicates if the expired product was sold')
+    expire_dates_parser.add_argument('--all', '-a', action='store_true', help='Show all expired products ')
+    
+    
     args = parser.parse_args()
     print(args)
     
@@ -136,6 +146,15 @@ def main():
 #inventory_update
     if args.command == 'update_inventory':
         calculate_stock()
+        
+#expire_date
+    if args.command == 'expire_dates':
+        if args.all:
+            expired_products()
+        else: 
+            err_console.print("The provided arguments are valid")
+     
+    
     
 #advance_time
     if hasattr(args, 'advance_time') and args.advance_time:
