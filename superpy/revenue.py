@@ -1,6 +1,6 @@
 import csv
 from today import *
-from rich_utils import RichUtils
+
 from datetime import datetime
 
 #style tables
@@ -57,7 +57,7 @@ def get_cost_bought_items(date):
         reader = csv.DictReader(csvfile)
         for row in reader: 
             if row['purchase_date'] == date_str:
-                cost = float(row['purchase_price']) * int(row['quantity'])
+                cost = float(row['price']) * int(row['quantity'])
                 bought_items_cost += cost
     return bought_items_cost
 
