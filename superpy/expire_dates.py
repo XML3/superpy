@@ -12,14 +12,14 @@ from inventory_utils import *
 def expired_products_header():
     is_new_file = False
     try:
-        with open('expired_dates.csv', 'r') as csvfile:
+        with open('expire_dates.csv', 'r') as csvfile:
             is_new_file = csvfile.read().strip() == ''
     except FileNotFoundError:
         is_new_file = True
         
     #write header if new or empty
     if is_new_file:
-        with open('expired_dates.csv', 'w', newline='') as csvfile:
+        with open('expire_dates.csv', 'w', newline='') as csvfile:
             fieldnames = ['product_id', 'product', 'expiry_date', 'expired_sold']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
@@ -39,19 +39,21 @@ def show_all_expired_products():
             print(f"Expiry Date: {expiry_date}")
             print()
 
-def expired_products():
+def expired_products(all_products=False):
     today = get_current_date()
     #load inventory data
     inventory = load_inventory()
     #load sold data
     sold_data = load_sold_data()
     
-    with open('expired_dates.csv', 'a', newline='') as csvfile:
+    with open('expire_dates.csv', 'a', newline='') as csvfile:
         fieldnames = ['product_id', 'product', 'expiry_date', 'expired_sold']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         for item in inventory:
-            expiry_date = item['expiry_date']
+            expiry_date_str = item['expiry_date']
+            expiry_date_str = expiry_date_str.split()[0]
+            expiry_date = datetime.strptime(expiry_date_str, '%Y-%m-%d').date()
             if expiry_date < today:
                 #Check if expired product was sold
                 product_id = item['product_id']
@@ -66,3 +68,4 @@ def expired_products():
 
         
         
+ 
