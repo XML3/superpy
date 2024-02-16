@@ -84,10 +84,10 @@ def main():
     
 #Create expired_product
     expire_dates_parser = subparsers.add_parser('expire_dates', help='Expired products, were they sold?')
-    expire_dates_parser.add_argument('product_id', type=str, help='Product ID')
-    expire_dates_parser.add_argument('product', type=str, help='Product"s name')
-    expire_dates_parser.add_argument('expiry_date', help='Product"s expiration date')
-    expire_dates_parser.add_argument('expired_sold', type=str, help='Indicates if the expired product was sold')
+    expire_dates_parser.add_argument('product_id', type=str, nargs='?', help='Product ID')
+    expire_dates_parser.add_argument('product', type=str, nargs='?', help='Product"s name')
+    expire_dates_parser.add_argument('expiry_date', nargs='?', help='Product"s expiration date')
+    expire_dates_parser.add_argument('expired_sold', nargs='?', type=str, help='Indicates if the expired product was sold')
     expire_dates_parser.add_argument('--all', '-a', action='store_true', help='Show all expired products ')
     
     
@@ -152,7 +152,7 @@ def main():
         if args.all:
             expired_products()
         else: 
-            err_console.print("The provided arguments are valid")
+            err_console.print("The provided arguments are not valid")
      
     
     
