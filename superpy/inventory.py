@@ -3,7 +3,7 @@ from today import *
 from create_id import*
 from inventory_utils import *
 from update_inventory import *
-
+from datetime import datetime
 
 #User will also be able to search inventory by date 
 def current_inventory():
@@ -12,20 +12,20 @@ def current_inventory():
     
     #display inventory
 def inventory_header():
-    is_new_file = False
     try:
         with open('inventory.csv', 'r') as csvfile:
-            is_new_file = csvfile.read().strip() == ''
+            # check if file is empty
+            if csvfile.read().strip() == '':
+                #if file is empty, write header
+                with open('inventory.csv', 'w', newline='') as csvfile:
+                    fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer.writeheader()
     except FileNotFoundError:
-        is_new_file = True
+       pass
         
-    #write header if new or empty
-    if is_new_file:
-        with open('inventory.csv', 'w', newline='') as csvfile:
-            fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            
+
+             
 #Prep Data for CSV 
 def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, created_date, product_id=None,):
     try:
@@ -109,22 +109,29 @@ def get_product_by_id(product_id):
     return None
 
 #Read and Print content of inventory file
-def print_inventory_data(date=None):
-    with open('inventory.csv', 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        header = next(reader)
-        print(header)
+def print_inventory_data(search_date=None):
+    try:
+        with open('inventory.csv', 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
+            header = next(reader)
+            print(header)
+
+            for row in reader:
+                row_date = datetime.strptime(row['created_date'].split()[0], '%Y-%m-%d').date()
+                if search_date is None or row_date == datetime.strptime(search_date, '%Y-%m-%d').date():
+                    print("Matching row: ", row)
+                else: 
+                    print("Non-matching row: ", row)
+    except StopIteration:
+        print("Inventory is empty")
         
-        for row in reader:
-            if date is None or row['create_date'] == date:
-                print(row)
-    
+        
 #function to advance the current date by specified number of days        
 def advance_time(days):
     advance_current_date(days)
     print('OK')
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
    
 
-    add_inventory(product='Apple', price=1.33, purchase_price='4', quantity_bought=2, quantity_sold=3, in_stock=10, expiry_date='2024-10-13', sale_price=1.5, expiry_status='not_expired', created_date='2024-03-03')
+    # add_inventory(product='Apple', price=1.33, purchase_price='4', quantity_bought=2, quantity_sold=3, in_stock=10, expiry_date='2024-10-13', sale_price=1.5, expiry_status='not_expired', created_date='2024-03-03')
