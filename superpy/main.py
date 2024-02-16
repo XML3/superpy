@@ -4,13 +4,12 @@ import csv
 from datetime import date
 from valid_date_fnc import valid_date
 from bought import add_purchase
-from transactions import *
 from sold import *
 from inventory import *
 from update_inventory import *
 from revenue import *
 from expire_dates import *
-from rich_utils import RichUtils
+
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
@@ -48,7 +47,7 @@ def main():
     
 #Create invetory parser to retrieve all inventory data
     inventory_parser = subparsers.add_parser('inventory', help="Retireve all inventory data")
-    inventory_parser.add_argument('--date', help='Date to filter inventory retrieval (YYYY-MM_DD)')
+    inventory_parser.add_argument('--date',type=str, help='Date to filter inventory retrieval (YYYY-MM_DD)')
 
     
 #Create add_inventory parser to add new inventory items 
@@ -62,7 +61,8 @@ def main():
     add_inventory_parser.add_argument('expiry_date', type=valid_date, help=' Product"s expiration date')
     add_inventory_parser.add_argument('sale_price',  type=float, help='Product"s sale price')
     add_inventory_parser.add_argument('expiry_status', type=str, help='Expiration date status')
-    add_inventory_parser.add_argument('--created_date', help='Date to fileter inventory (YYYY-MM-DD)')
+    add_inventory_parser.add_argument('--created_date', type=str, help='Date to fileter inventory (YYYY-MM-DD)')
+
 #Create inventory_ID parser to retrieve product by ID
     inventory_id_parser = subparsers.add_parser('inventory_id', help='Retrieve a product by ID')
     inventory_id_parser.add_argument('product_id', type=str, help='Product ID')
@@ -94,7 +94,7 @@ def main():
     args = parser.parse_args()
     print(args)
     
-    #buy
+    #buy : adds purchase for bought items to bought.csv, generates new ID 
     if args.command == 'buy':
         add_purchase(args.product, args.price, args.quantity, args.expiration_date, args.purchase_date)
         print("Succesful")
@@ -115,14 +115,14 @@ def main():
             print("Product found:")
             print(product)
     
-   #inventory retrieval 
+   #inventory retrieval (all or by date)
     if args.command == 'inventory':
         if args.date:
             print("Inventory for date: ", args.date)
             print_inventory_data(args.date)
         else:
            print('Full inventory: ')
-           print_inventory_data()
+           print_inventory_data(None)
            
     #Add new items to inventory 
     if args.command == 'add_inventory':
