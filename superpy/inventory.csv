@@ -1,5 +1,5 @@
-product_id,product,price,purchase_price,quantity_bought,quantity_sold,in_stock,expiry_date,sale_price,expiry_status,update_date
-0d4a702c-ccee-4e91-abb2-62bd82a4f7c5,Apple,1.33,4,2,3,10,2024-10-13,1.5,not_expired,2024-02-13
-
-
-fcbdaa15-8e58-4c04-9ea5-de220e9e4e48,Berries,30.0,20,10,5,5,2024-02-25 00:00:00,2.5,not expired,2024-02-15
+product_id,product,price,purchase_price,quantity_bought,quantity_sold,in_stock,expiry_date,sale_price,expiry_status,created_date
+4415d44c-9263-4318-9c31-48d3a29624cf,Berries,30.0,20,10,5,5,2024-02-25 00:00:00,2.5,not expired,2024-02-16
+4fb728fc-2fad-43da-b66e-b6dc044ab936,Apples,1.5,100,150,100,50,2024-04-12 00:00:00,2.0,not_expired,2024-02-16
+ce225468-b20a-4cef-81c6-ee315e7556c8,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-16
+6910c99e-9b05-4699-a74e-c580fc728e29,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-16
