@@ -3,7 +3,26 @@ from inventory import *
 from update_inventory import *
 from sold import *
 from inventory_utils import *
+from rich.table import Table
+from rich.console import Console
+from richtable import *
 
+#Table Rich section 
+def display_expire_dates():
+    console = Console()
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Product ID", style= "blue", justify="center")
+    table.add_column('Product', style="cyan", justify="center")
+    table.add_column("Expiry Date", style="red", justify="center")
+    table.add_column("Sold Expired Product", style="red", justify="center")
+   
+    with open('expire_dates.csv', 'r' ) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            add_row(table, row['product_id'], row['product'], row['expiry_date'],row['expired_sold'])
+        console.print(table)
+        
+        
 #Check for products with expired dates compared with today's date, it iterates  through the inventory file  and using a functuion to load the inventory,
 # For each item in the inventory, it checks the expiry_date against today's date (using a callback function). 
 # It loads the sold data, it compares, checks If item has expired and has been sold, informs and append this to the CSV file
