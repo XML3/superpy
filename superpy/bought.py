@@ -5,7 +5,6 @@ from datetime import datetime
 from rich.table import Table
 
 from rich.console import Console
-from headers import HeaderType
 from richtable import *
 
 def display_bought():
