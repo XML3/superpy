@@ -14,7 +14,7 @@ def update_existing_product(product_id, new_data):
             product.update(new_data)
 #write updated inventory to file
     with open('inventory.csv', 'w', newline="") as csvfile:
-        fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_data', 'sale_price', 'expiry_status', 'update_date']
+        fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(inventory)
@@ -58,7 +58,7 @@ def calculate_stock():
         #updates the `stock` dict. Retrieves the currect quantity of the product from stock, it subtracts the quantity_sold to esxisting quantity / else zero. = updates the value of `product` key in the `stock` dict.
         stock[product] = stock.get(product, 0) - quantity_sold
         
-        return stock
+    return stock
     
     #usage
     stock = calculate_stock()
