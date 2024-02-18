@@ -9,11 +9,15 @@ from inventory import *
 from update_inventory import *
 from revenue import *
 from expire_dates import *
+from richtable import create_table, add_row
+
+
 
 
 # Do not change these lines.
 __winc_id__ = "a2bc36ea784242e4989deb157d527ba0"
 __human_name__ = "superpy"
+
 
 #Console instance for error = Red
 err_console = Console(stderr=True, style="red bold")
@@ -74,7 +78,7 @@ def main():
     update_inventory_parser.add_argument('quantity_sold', type=int, help='Sold quantity of product')
     update_inventory_parser.add_argument('in_stock', type=int, help='Total Stock quantity of product')
     update_inventory_parser.add_argument('--date', help='Date to update inventory (YYY-MM-DD)')
-    
+    update_inventory_parser.add_argument('--sale_price', type=float, help='Sale price', default=None) 
 #Create revenue parser
     revenue_parser = subparsers.add_parser('revenue', help='Get revenue information')
     revenue_parser.add_argument('input', nargs='?', choices=['today', 'yesterday'], default='today', help='Specify type of request (default: today)')
@@ -98,13 +102,15 @@ def main():
     if args.command == 'buy':
         add_purchase(args.product, args.price, args.quantity, args.expiration_date, args.purchase_date)
         print("Succesful")
+        
+        display_bought()
 
     #sell
     if args.command == 'sell':
       sold_data = prep_sold_data(args.bought_id, args.product, args.sell_price, args.quantity, args.sell_date)
       write_to_csv(sold_data)
       print("Successful Sale")
-
+      display_sold()
     #transaction
     
     #inventory_ID
@@ -114,6 +120,7 @@ def main():
         if product:
             print("Product found:")
             print(product)
+            display_inventory()
     
    #inventory retrieval (all or by date)
     if args.command == 'inventory':
@@ -124,16 +131,19 @@ def main():
            print('Full inventory: ')
            print_inventory_data(None)
            
+           display_inventory()
+           
     #Add new items to inventory 
     if args.command == 'add_inventory':
         add_inventory(args.product, args.price, args.purchase_price, args.quantity_bought, args.quantity_sold, args.in_stock, args.expiry_date, args.sale_price, args.expiry_status, args.created_date)
-          
+        display_inventory()
             
     #revenue
     if args.command == 'revenue':
         if args.start_date and args.end_date:
                 revenue = get_revenue_specify_period(args.start_date, args.end_date)
                 print('Revenue for the specified period: ', revenue)
+                display_revenue(args.start_date, args.end_date)
         elif args.date:
             revenue, cost = revenue_requests('--date', args.date)
             print('Revenue:', revenue)
@@ -142,18 +152,36 @@ def main():
             revenue, cost = revenue_requests(args.input)
             print('Revenue: ', revenue)
             print("Cost:", cost)
+            
+            display_revenue()
     
 #inventory_update
     if args.command == 'update_inventory':
-        calculate_stock()
+        if args.product and args.quantity_bought and args.quantity_sold and args.in_stock:
+           #preps for new data
+            new_data = {
+                'product': args.product,
+                'quantity_bought': args.quantity_bought,
+                'quantity_sold': args.quantity_sold,
+                'in_stock': args.in_stock,
+                'sale_price': args.sale_price
+            }
+         #updates exisiting product in the inventory
+            update_existing_product(args.product, new_data)
+            print("Inventory updated successfully.")
+        else: 
+            print("Missing required arguments.")
+
+            
         
 #expire_date
     if args.command == 'expire_dates':
         if args.all:
-            expired_products()
+             display_expire_dates()
         else: 
             err_console.print("The provided arguments are not valid")
-     
+
+           
     
     
 #advance_time
