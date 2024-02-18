@@ -1,5 +1,4 @@
 product_id,product,price,purchase_price,quantity_bought,quantity_sold,in_stock,expiry_date,sale_price,expiry_status,created_date
-4415d44c-9263-4318-9c31-48d3a29624cf,Berries,30.0,20,10,5,5,2024-02-25 00:00:00,2.5,not expired,2024-02-16
-4fb728fc-2fad-43da-b66e-b6dc044ab936,Apples,1.5,100,150,100,50,2024-04-12 00:00:00,2.0,not_expired,2024-02-16
-ce225468-b20a-4cef-81c6-ee315e7556c8,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-16
-6910c99e-9b05-4699-a74e-c580fc728e29,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-16
+c43a07a6-a909-43b0-92cd-b3a76bb961d9,c43a07a6-a909-43b0-92cd-b3a76bb961d9,6.5,100,6,10,5,2024-04-02 00:00:00,3.45,not_expired,2024-02-16
+e301a6b3-f38d-47f5-b597-8ce07c164c8e,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-18
+1fac123a-edc1-46b4-9223-bb1e99e3d7a8,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-18
