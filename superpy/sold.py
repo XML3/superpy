@@ -1,7 +1,27 @@
 import csv
 from create_id import *
 from datetime import datetime
+from rich.table import Table
+from rich.console import Console
+from richtable import *
 
+#Table Rich section 
+def display_sold():
+    console = Console()
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Sold ID", style= "blue", justify="center")
+    table.add_column('Bought ID', style="cyan", justify="center")
+    table.add_column("Product", style="cyan", justify="center")
+    table.add_column("Sell Price", style="green", justify="center")
+    table.add_column("Quantity", style="cyan", justify="center")
+    table.add_column("Sell Date", style="yellow", justify="center")
+   
+    with open('sold.csv', 'r' ) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            add_row(table, row['sold_id'], row['bought_id'], row['product'],row['sell_price'], row['quantity'], row['sell_date'])
+        console.print(table)
+        
 #Header:
 def write_header():
 #check if header exists
