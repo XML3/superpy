@@ -2,9 +2,27 @@ import csv
 import argparse
 from create_id import *
 from datetime import datetime
+from rich.table import Table
+
 from rich.console import Console
+from headers import HeaderType
+from richtable import *
 
+def display_bought():
+    console = Console()
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Purchase ID", style= "blue", justify="center")
+    table.add_column('Product', style="cyan", justify="center")
+    table.add_column("Price", style="green", justify="center")
+    table.add_column("Quantity", style="yellow", justify="center")
+    table.add_column("Expiration Date", style="red", justify="center")
+    table.add_column("Purchase Date", style="blue", justify="center")
 
+    with open('bought.csv', 'r' ) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            add_row(table, row['purchase_id'], row['product'], row['price'],row['quantity'], row['expiration_date'], row['purchase_date'])
+        console.print(table)
 #header 
 def write_header():
     #Check if file already exists
@@ -62,4 +80,4 @@ if __name__ == "__main__":
     #sample purchase
     add_purchase('Orange', 1.50, 3, '2024-02-15')
 
-    print_bought_data()
+    display_bought()
