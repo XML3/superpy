@@ -4,7 +4,33 @@ from create_id import*
 from inventory_utils import *
 from update_inventory import *
 from datetime import datetime
+from rich.table import Table
 
+from rich.console import Console
+from richtable import *
+
+#Rich Table section
+def display_inventory():
+    console = Console()
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Product ID", style= "blue", justify="center")
+    table.add_column('Product', style="cyan", justify="center")
+    table.add_column("Price", style="green", justify="center")
+    table.add_column("Purchase Price", style="yellow", justify="center")
+    table.add_column("Quantity Bought", style="cyan", justify="center")
+    table.add_column("Quantity Sold", style="blue", justify="center")
+    table.add_column("In Stock", style="green", justify="center")
+    table.add_column("Expiry Data", style="red", justify="center")
+    table.add_column("Created Date", style="yellow", justify="center")
+    
+    
+    with open('inventory.csv', 'r' ) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            add_row(table, row['product_id'], row['product'], row['price'], row['purchase_price'], row['quantity_bought'], row['quantity_sold'], row['in_stock'], row['expiry_date'], row['created_date'])
+        console.print(table)
+        
+        
 #User will also be able to search inventory by date 
 def current_inventory():
     current_date = get_current_date()
@@ -21,8 +47,8 @@ def inventory_header():
                     fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
-    except FileNotFoundError:
-       pass
+    except FileNotFoundError as e:
+       print(f"Error occurred while accessing file: {e}")
         
 
              
@@ -131,7 +157,3 @@ def advance_time(days):
     advance_current_date(days)
     print('OK')
 
-# if __name__ == "__main__":
-   
-
-    # add_inventory(product='Apple', price=1.33, purchase_price='4', quantity_bought=2, quantity_sold=3, in_stock=10, expiry_date='2024-10-13', sale_price=1.5, expiry_status='not_expired', created_date='2024-03-03')
