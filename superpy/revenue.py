@@ -1,10 +1,43 @@
 import csv
 from today import *
-
 from datetime import datetime
+from rich.table import Table
+from rich.console import Console
+from richtable import *
 
-#style tables
+#Rich Table section
+def display_revenue(start_date=None, end_date=None):
+    console = Console()
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Date", style= "yellow", justify="center")
+    table.add_column('Sold Revenue', style="green", justify="center")
+    table.add_column("Buying Cost", style="cyan", justify="center")
+    if start_date and end_date:
+        table.add_column("Start Date", style="yellow", justify="center")
+        table.add_column("End Date", style="cyan", justify="center")
+   
+    rows_read = False
+    
+    with open('revenue.csv', 'r' ) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            rows_read = True  # Set flag to True if rows are read
+            add_row(table, row['date'], row['revenue_sold'], row['cost_bought'], start_date, end_date)
+    if not rows_read:  # If no rows were read, add a message
+            add_row(table, "No data available", "", "", start_date, end_date)
+    console.print(table)
+        
 
+def write_revenue(revenue_sold, cost_bought):
+    with open('revenue.csv', 'w', newline='') as csvfile:
+        fieldnames = ['date', 'revenue_sold', 'cost_bought']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerow({
+            'date': datetime.now().strftime('%Y-%m-%d'),
+            'revenue_sold': revenue_sold,
+            'cost_bought': cost_bought
+        })
 
 
 def revenue_requests(input, date=None):
