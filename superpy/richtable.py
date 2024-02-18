@@ -1,23 +1,18 @@
 from rich.table import Table
 from rich.console import Console
-from headers import *
+from headers import HeaderType
 
-def console_table(header_type):
-    #call headers from header file
-    if header_type == 'bought':
-        headers = bought_header
-        
-    elif header_type == 'sold':
-        headers = sold_header
-        
-    elif header_type == 'inventory':
-        headers = inventory_header
-        
-    elif header_type == 'expired':
-        headers = expired_header
-        
-    elif header_type == 'revenue':
-        headers = revenue_header
-        
-    else:
-        raise ValueError("Invalid header type!")
+def create_table(header_type: HeaderType):
+    headers = header_type.value
+    print("Headers:", headers)
+    console = Console()
+
+    table = Table(show_header=True, header_style="bold magenta")
+    print("Table created sucessfully")
+    for header in headers:
+        table.add_column(header)
+
+    return console, table
+
+def add_row(table: Table, *data):
+    table.add_row(*data)
