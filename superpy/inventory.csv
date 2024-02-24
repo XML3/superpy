@@ -1,4 +1,2 @@
 product_id,product,price,purchase_price,quantity_bought,quantity_sold,in_stock,expiry_date,sale_price,expiry_status,created_date
-c43a07a6-a909-43b0-92cd-b3a76bb961d9,c43a07a6-a909-43b0-92cd-b3a76bb961d9,6.5,100,6,10,5,2024-04-02 00:00:00,3.45,not_expired,2024-02-16
-e301a6b3-f38d-47f5-b597-8ce07c164c8e,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-18
-1fac123a-edc1-46b4-9223-bb1e99e3d7a8,Chicken,6.5,100,150,10,5,2024-04-02 00:00:00,2.0,not_expired,2024-02-18
+aee8db76-dac6-4bf1-8313-fbadbe45b903,Apple,2.4,2.4,3,0,3,2024-04-10 00:00:00,,,2024-03-15 00:00:00
