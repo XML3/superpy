@@ -31,7 +31,7 @@ def display_inventory():
         console.print(table)
     
     #this will update the inventory with the newly bought items in the bought file
-    display_bought()
+    # display_bought()
         
 #User will also be able to search inventory by date 
 def current_inventory():
@@ -46,7 +46,7 @@ def inventory_header():
             if csvfile.read().strip() == '':
                 #if file is empty, write header
                 with open('inventory.csv', 'w', newline='') as csvfile:
-                    fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
+                    fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'purchase_date']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
     except FileNotFoundError as e:
@@ -55,13 +55,13 @@ def inventory_header():
 
              
 #Prep Data for CSV 
-def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, created_date, product_id=None,):
+def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, purchase_date, product_id=None,):
     try:
         #generate unique ID for each product
         # if product_id is None:
         #     product_id = generate_product_id()
             
-        created_date = get_current_date()
+        # created_date = get_current_date()
 
         
         inventory_data = {
@@ -75,7 +75,7 @@ def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold
             'expiry_date': expiry_date,
             'sale_price': sale_price,
             'expiry_status': expiry_status,
-            'created_date': created_date
+            'purchase_date': purchase_date
         }
         
         #Load inventory - check if product by id already exists (when searched by ID)
@@ -89,7 +89,7 @@ def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold
             print('Adding new product to inventory...')
             #Append new inventory to the file
             with open('inventory.csv', 'a', newline='') as csvfile:
-                fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
+                fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'purchase_date']
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writerow(inventory_data)
         
