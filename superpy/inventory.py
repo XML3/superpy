@@ -29,7 +29,9 @@ def display_inventory():
         for row in reader:
             add_row(table, row['product_id'], row['product'], row['price'], row['purchase_price'], row['quantity_bought'], row['quantity_sold'], row['in_stock'], row['expiry_date'], row['created_date'])
         console.print(table)
-        
+    
+    #this will update the inventory with the newly bought items in the bought file
+    display_bought()
         
 #User will also be able to search inventory by date 
 def current_inventory():
