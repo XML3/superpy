@@ -60,6 +60,7 @@ def calculate_stock():
         
     return stock
     
+if __name__ == "__main__":
     #usage
     stock = calculate_stock()
     print(stock)
