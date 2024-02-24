@@ -3,7 +3,7 @@ import argparse
 import csv
 from datetime import date
 from valid_date_fnc import valid_date
-from bought import add_purchase
+from bought import add_purchase, display_bought
 from sold import *
 from inventory import *
 from update_inventory import *
@@ -103,6 +103,11 @@ def main():
         add_purchase(args.product, args.price, args.quantity, args.expiration_date, args.purchase_date)
         print("Succesful")
         
+        #Update inventory with the newly bought items
+        update_existing_product(args.product, {
+            'quantity_bought': args.quantity,
+            'in_stock': args.quantity
+        })
         display_bought()
 
     #sell
