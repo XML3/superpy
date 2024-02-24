@@ -35,7 +35,6 @@ The application holds the following features:
 * Records new inventory data into CSV file
 * Retrieves inventory by created date
 * Retrieves products by ID
-* Updates inventory data by existing product ID
 * Retrieve all expired products
 * Checks if expired products were sold, if so, prints these to the CSV file
 * Calculates stock based on bought and sold items
@@ -47,7 +46,7 @@ The application holds the following features:
 
 **Bought Items**
 
-* Adds new bought products to CSV file, generates new ID:
+* Allows the user to add a new product to stock, generates new ID for the new item and automatically UPDATES the inventory csv file:
 
 ```
 python main.py buy [product, price, quantity, expiration_date(str), purchase_date(str)]
@@ -83,21 +82,6 @@ python main.py inventory --date 2024-02-16
 python main.py inventory_id [product_id]
 ```
 
-**Add Inventory**
-
-* Add product to inventory:
-
-```
-python main.py add_inventory [product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, created_date]
-```
-
-**Inventory Update**
-
-* Products can be updated in the inventory CSV file by using an existing product's id. (Notice the extra command for sale_price) 
-
-```
-python main.py update_inventory [product_id] 6 10 5 --sale_price 3.45
-```
 
 
 **Revenue**
