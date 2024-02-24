@@ -6,6 +6,7 @@ from rich.table import Table
 
 from rich.console import Console
 from richtable import *
+from inventory import add_inventory
 
 def display_bought():
     console = Console()
@@ -52,7 +53,7 @@ def add_purchase(product, price, quantity, expiration_date, purchase_date):
             'price': price,
             'quantity': quantity,
             'expiration_date': expiration_date,
-            'purchase_date': datetime.now().strftime('%Y-%m-%d')
+            'purchase_date': purchase_date,
         }
         #write header if needed
         write_header()
@@ -63,6 +64,9 @@ def add_purchase(product, price, quantity, expiration_date, purchase_date):
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(purchase_data)
         
+        #Update inventory with new bought item // positional hell = headache!
+        add_inventory(product, price, price, quantity, 0, quantity, expiration_date, None, None,  purchase_date, product_id=purchase_id)
+
     except Exception as e:
         print(f"An error occurred while adding purchase: {e}")
     
