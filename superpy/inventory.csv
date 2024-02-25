@@ -1,2 +1,3 @@
 product_id,product,price,purchase_price,quantity_bought,quantity_sold,in_stock,expiry_date,sale_price,expiry_status,created_date
 aee8db76-dac6-4bf1-8313-fbadbe45b903,Apple,2.4,2.4,3,0,3,2024-04-10 00:00:00,,,2024-03-15 00:00:00
+188c0beb-d57e-46d1-a638-ce86002c4a93,Berries,5.0,5.0,2,0,2,2024-04-15 00:00:00,,,2024-03-25 00:00:00
