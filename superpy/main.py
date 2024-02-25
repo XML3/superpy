@@ -45,9 +45,7 @@ def main():
     sell_parser.add_argument('quantity', type=int, help='Chosen amount of items')
     sell_parser.add_argument('sell_date', type=valid_date, help='Sell date (format: YYYY-MM-DD)')
     
-#Create transaction parser
-    transaction_parser = subparsers.add_parser('transaction', help="Transaction records from buy and sell transactions")
-    #add arguments here
+
     
 #Create invetory parser to retrieve all inventory data
     inventory_parser = subparsers.add_parser('inventory', help="Retireve all inventory data")
@@ -110,14 +108,16 @@ def main():
         })
         display_bought()
 
-    #sell
+     #sell
     if args.command == 'sell':
       sold_data = prep_sold_data(args.bought_id, args.product, args.sell_price, args.quantity, args.sell_date)
       write_to_csv(sold_data)
       print("Successful Sale")
       display_sold()
-    #transaction
-    
+      
+      #Update inventory after sale
+      update_inventory(args.product, args.quantity)
+
     #inventory_ID
     if args.command == 'inventory_id':
         product_id = args.product_id
