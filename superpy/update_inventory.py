@@ -1,7 +1,6 @@
 import csv
 from today import *
 from bought import *
-from sold import *
 from inventory_utils import *
 
 #functions to manage inventory updates, from bought to sold and what is in_stock
@@ -12,6 +11,7 @@ def update_existing_product(product_id, new_data):
     for product in inventory:
         if product['product_id'] == product_id:
             product.update(new_data)
+            break
 #write updated inventory to file
     with open('inventory.csv', 'w', newline="") as csvfile:
         fieldnames = ['product_id', 'product', 'price', 'purchase_price', 'quantity_bought', 'quantity_sold', 'in_stock', 'expiry_date', 'sale_price', 'expiry_status', 'created_date']
