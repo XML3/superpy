@@ -31,13 +31,15 @@ def display_inventory():
         console.print(table)
     
         
-#User will also be able to search inventory by date 
+
 def current_inventory():
+    #User will also be able to search inventory by date 
     current_date = get_current_date()
     print_inventory_data(current_date)
     
-    #display inventory
+    
 def inventory_header():
+    #display inventory
     try:
         with open('inventory.csv', 'r') as csvfile:
             # check if file is empty
@@ -52,8 +54,9 @@ def inventory_header():
         
 
              
-#Prep Data for CSV 
+
 def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold, in_stock, expiry_date, sale_price, expiry_status, purchase_date, product_id=None,):
+    #Prep Data for CSV 
     try:
         #generate unique ID for each product
         # if product_id is None:
@@ -76,8 +79,9 @@ def add_inventory(product, price, purchase_price, quantity_bought, quantity_sold
             'purchase_date': purchase_date
         }
         
-        #Load inventory - check if product by id already exists (when searched by ID)
+        
         inventory = load_inventory()
+        #Load inventory - check if product by id already exists (when searched by ID)
         existing_product = get_product_by_id(inventory_data['product_id'])
         
         if existing_product:
@@ -105,37 +109,42 @@ def get_purchase_price(product, inventory):
             return row['price']
     return None
 
-#Get expiry_date call function
+
 def get_expiry_date(product, inventory):
+    #Get expiry_date call function
       for row in inventory:
           if row['product'] == product:
               return row['expiry_date']
       return None
   
-  #Get sale_price call function      
+       
 def get_sale_price(product, inventory):
+    #Get sale_price call function 
     for row in inventory:
         if row['product'] == product:
             return row['sale_price']
     return None
     
-#Get expirary_status, call function
+
 def get_expiry_status(product, inventory):
+    #Get expirary_status, call function
     for row in inventory:
         if row['product'] == product:
             return row['expiry_status']
     return None
 
-#Get product by ID
+
 def get_product_by_id(product_id):
+    #Get product by ID
     inventory = load_inventory()
     for product in inventory:
         if product['product_id'] == product_id:
             return product
     return None
 
-#Read and Print content of inventory file
+
 def print_inventory_data(search_date=None):
+    #Read and Print content of inventory file
     try:
         with open('inventory.csv', 'r') as csvfile:
             reader = csv.DictReader(csvfile)
