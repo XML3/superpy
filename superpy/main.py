@@ -117,6 +117,9 @@ def main():
       
       #Update inventory after sale
       update_inventory(args.product, args.quantity)
+      
+      #Advance the current date by 1 or +
+      advance_current_date(1)
 
     #inventory_ID
     if args.command == 'inventory_id':
