@@ -4,6 +4,8 @@ from datetime import datetime
 from rich.table import Table
 from rich.console import Console
 from richtable import *
+from update_inventory import update_existing_product
+from inventory_utils import load_inventory
 
 #Table Rich section 
 def display_sold():
@@ -64,8 +66,22 @@ def write_to_csv(sold_data):
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(sold_data)
             print("Data written to CSV:", sold_data)
+            
     except Exception as e:
         print("Error writing to CSV:", e)
+        
+def update_inventory(product, quantity_sold):
+    inventory = load_inventory()
+    for item in inventory:
+        if item['product'] == product:
+            item['quantity_sold'] = int(item.get('quantity_sold', 0)) + quantity_sold
+            item['in_stock'] = int(item.get('in_stock', 0)) - item['quantity_sold']
+            update_data = {
+                'quantity_sold': item['quantity_sold'],
+                'in_stock': item['in_stock']
+            }
+            #update inventory file
+            update_existing_product(product, update_data)
 
 if __name__ == "__main__":
     bought_id = 'a251e173-3415-490d-bef4-b9d42545e157'
