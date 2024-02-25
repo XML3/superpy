@@ -40,8 +40,9 @@ def write_header():
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
     
-#Prep Data for CSV function
+
 def add_purchase(product, price, quantity, expiration_date, purchase_date):
+    #Prep Data for CSV function
     try:
          #Generate unique ID for purchase
         purchase_id = generate_purchase_id()
@@ -64,14 +65,16 @@ def add_purchase(product, price, quantity, expiration_date, purchase_date):
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writerow(purchase_data)
         
-        #Update inventory with new bought item // positional hell = headache!
+        
         add_inventory(product, price, price, quantity, 0, quantity, expiration_date, None, None,  purchase_date, product_id=purchase_id)
+#Update inventory with new bought item // positional hell = headache!
 
     except Exception as e:
         print(f"An error occurred while adding purchase: {e}")
     
-    #Read and Print content of bought.csv file
+   
 def print_bought_data():
+     #Read and Print content of bought.csv file
     with open('bought.csv', 'r') as csvfile:
         reader = csv.reader(csvfile)
         header = next(reader)
